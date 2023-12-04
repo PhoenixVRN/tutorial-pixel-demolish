@@ -4,7 +4,7 @@ using UnityEngine;
 public class Cube : MonoBehaviour
 {
     private bool _detouched;
-
+    public bool Detouched => _detouched;
     public int Id { get; set; }
 
     [ContextMenu("Detouch cube")]
