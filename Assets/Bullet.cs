@@ -1,29 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Gun : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _explosionRAdius;
- 
-    void Update()
+
+    void Start()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            // RayCast();
-        }
+        Invoke("DestroyObj", 3f);
     }
 
-    private void RayCast()
+
+    private void OnCollisionEnter(Collision other)
     {
-        Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(r, out RaycastHit hit, 2000))
+        if (other.collider.TryGetComponent(out Cube cube))
         {
-            if (hit.collider.TryGetComponent(out Cube cube))
+            if (!cube.Detouched)
             {
-                cube.Destroy();
+                // cube.Destroy();
             }
-            Explosion(hit.point);
+
+            Explosion(other.contacts[0].point);
         }
     }
 
@@ -41,9 +37,14 @@ public class Gun : MonoBehaviour
                 }
                 else
                 {
-                    cube.Destroy();
+                    // cube.Destroy();
                 }
             }
         }
+    }
+
+    public void DestroyObj()
+    {
+        Destroy(gameObject);
     }
 }
