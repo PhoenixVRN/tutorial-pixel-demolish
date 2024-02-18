@@ -25,7 +25,7 @@ public class BulletCreator : MonoBehaviour
 
     public void Fire(InputAction.CallbackContext context)
     {
-        return; //TODO
+       if (IsMobile) return;
         Debug.Log($"Context {context.phase}");
         if (context.started)
         {

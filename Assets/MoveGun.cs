@@ -12,9 +12,8 @@ public class MoveGun : MonoBehaviour
     public int distz;
     public GameObject aimart;
     public Canvas canvas;
-    
-    [Header("Jostick")]
-    public float speed;
+
+    [Header("Jostick")] public float speed;
     public FixedJoystick variableJoystick;
     public GameObject fireButton;
 
@@ -25,28 +24,27 @@ public class MoveGun : MonoBehaviour
 
     private void Start()
     {
-        screenPoint = new Vector3(600,400,0);
+        screenPoint = new Vector3(600, 400, 0);
         isMobile = Application.isMobilePlatform;
-        // if (isMobile)
-        // {
-        variableJoystick.gameObject.SetActive(true);
-        fireButton.SetActive(true);
-        // }
+        if (isMobile)
+        {
+            variableJoystick.gameObject.SetActive(true);
+            fireButton.SetActive(true);
+        }
     }
 
     void FixedUpdate()
     {
-        MoveMobile();
+        // MoveMobile();
         // MovePC();
-        // if (isMobile) MoveMobile();
-        // else MovePC();
+        if (isMobile) MoveMobile();
+        else MovePC();
     }
 
     private void MovePC()
     {
         if (Input.GetMouseButton(1))
         {
-
             Vector3 screenPoint = Input.mousePosition;
             // screenPoint.z = Camera.main.farClipPlane;
             screenPoint.z = distz;
@@ -56,7 +54,7 @@ public class MoveGun : MonoBehaviour
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(),
                 Input.mousePosition,
                 Camera.main, out localPoint);
-          
+
             aimart.transform.localPosition = localPoint;
             Vector3 origin = transform.position;
             Vector3 direction = (wordPoint - origin).normalized;
@@ -78,7 +76,7 @@ public class MoveGun : MonoBehaviour
         screenPoint.z = distz;
         wordPoint = Camera.main.ScreenToWorldPoint(screenPoint);
         Vector2 localPoint = Vector2.zero;
-        
+
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(),
             screenPoint,
             Camera.main, out localPoint);
